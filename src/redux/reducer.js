@@ -1,10 +1,11 @@
 import {AUTH_SUCCESS, SHOW_CONTENT, UPDATE_NEW_EMAIL, UPDATE_NEW_PASSWORD} from "./types";
 
 const initialState = {
-    email: 'vanya.usovich@gmail.com',
-    password: 'vanya1234',
+    email: '',
+    password: '',
     data:null,
-    message:null
+    message:null,
+
 }
 
 

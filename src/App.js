@@ -16,11 +16,12 @@ function App() {
     const password = useSelector(selectPassword)
     const message = useSelector(selectMessage)
     const data = useSelector(selectData)
-    if (data && data.statusCode === 200) {
+    if (data && data.statusCode === 200 ) {
         history.push("/me");
-    } else {
+    } else if (data && data.status_code === 401){
         history.push("/")
     }
+
     return (
         <div className="App">
             <Route exact path="/">
@@ -28,7 +29,7 @@ function App() {
             </Route>
 
             <Route exact path="/me">
-                <UserPage message={message}/>
+                <UserPage  message={message}/>
             </Route>
             <Route history={history}/>
 

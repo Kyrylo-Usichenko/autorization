@@ -34,7 +34,7 @@ export function showContent(data) {
         let ShowUrl = `http://142.93.134.108:1111/me`
         const response = await axios.get(ShowUrl, {
             headers: {
-                Authorization: `Bearer ${data.body.access_token}`
+                Authorization: `Bearer ${data}`
             }
         })
         const resData = response.data
@@ -91,7 +91,7 @@ export function login(email, password) {
 
             if (res.data.statusCode === 200) {
                 saveToken(JSON.stringify(res.data.body.access_token),JSON.stringify( res.data.body.refresh_token))
-                dispatch(showContent(res.data))
+                dispatch(showContent(res.data.body.access_token))
                 dispatch(authSuccess(res.data))
             } else {
                 alert(res.data.message || 'user not found')
@@ -114,3 +114,4 @@ export function registration(email, password) {
 
     }
 }
+
