@@ -1,15 +1,22 @@
+import {ActionsType} from "./types";
 import {AUTH_SUCCESS, SHOW_CONTENT, UPDATE_NEW_EMAIL, UPDATE_NEW_PASSWORD} from "./types";
 
-const initialState = {
+export type InitialStateTypes = {
+    email: string,
+    password: string,
+    data: any,
+    message: string | null,
+}
+
+const initialState: InitialStateTypes = {
     email: '',
     password: '',
-    data:null,
-    message:null,
+    data: null,
+    message: null,
 
 }
 
-
-function reducer(state = initialState, action) {
+function reducer(state= initialState, action: ActionsType) {
     switch (action.type) {
         case AUTH_SUCCESS:
             return {
@@ -36,7 +43,5 @@ function reducer(state = initialState, action) {
 
     }
 }
-
-
 
 export default reducer

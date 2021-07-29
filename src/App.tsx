@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from 'react'
 import {Route} from 'react-router-dom'
 import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
@@ -8,19 +8,14 @@ import UserPage from "./components/UserPage/UserPage";
 
 function App() {
     const history = useHistory();
-    const selectEmail = ({reducer}) => reducer.email
-    const selectPassword = ({reducer}) => reducer.password
-    const selectMessage = ({reducer}) => reducer.message
-    const selectData = ({reducer}) => reducer.data
-    const email = useSelector(selectEmail)
-    const password = useSelector(selectPassword)
-    const message = useSelector(selectMessage)
-    const data = useSelector(selectData)
+    const {email,password,message,data} = useSelector(({reducer}:any) => reducer)
+
     if (data && data.statusCode === 200 ) {
         history.push("/me");
     } else if (data && data.status_code === 401){
         history.push("/")
     }
+
 
     return (
         <div className="App">
@@ -31,8 +26,6 @@ function App() {
             <Route exact path="/me">
                 <UserPage  message={message}/>
             </Route>
-            <Route history={history}/>
-
         </div>
     );
 }
