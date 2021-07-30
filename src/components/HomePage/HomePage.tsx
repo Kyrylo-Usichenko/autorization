@@ -1,29 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {useDispatch} from "react-redux";
-import {login, registration, updateEmailActionCreator, updatePasswordActionCreator} from "../../redux/actions";
+import {login, registration} from "../../redux/actions";
 import './../../styles/global.css'
 import styles from './HomePage.module.css'
 
-const HomePage = ({email, password}) => {
+const HomePage: React.FunctionComponent = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     const dispatch = useDispatch()
 
 
-    const onEmailChange = (e) => {
-        dispatch(updateEmailActionCreator(e.target.value))
-
+    const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
     }
 
-    const onPasswordChange = (e) => {
-        dispatch(updatePasswordActionCreator(e.target.value))
+    const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
     }
 
-    const onFormSubmit = (event) => {
+    const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
     }
 
     const onRegisterClick = () => {
         dispatch(registration(email, password))
-
     }
 
     const onLoginClick = () => {

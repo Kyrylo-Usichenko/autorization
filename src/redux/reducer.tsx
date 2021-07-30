@@ -1,5 +1,4 @@
-import {ActionsType} from "./types";
-import {AUTH_SUCCESS, SHOW_CONTENT, UPDATE_NEW_EMAIL, UPDATE_NEW_PASSWORD} from "./types";
+import { ActionsType, ActionsTypeEnum } from "./types";
 
 export type InitialStateTypes = {
     email: string,
@@ -18,25 +17,17 @@ const initialState: InitialStateTypes = {
 
 function reducer(state= initialState, action: ActionsType) {
     switch (action.type) {
-        case AUTH_SUCCESS:
-            return {
-                ...state, data: action.data,
-            }
-        case UPDATE_NEW_EMAIL:
+        case ActionsTypeEnum.AUTH_SUCCESS:
             return {
                 ...state,
-                email: action.value
+                data: action.statusCode,
+
             }
 
-        case UPDATE_NEW_PASSWORD:
+        case ActionsTypeEnum.SHOW_CONTENT:
             return {
                 ...state,
-                password: action.value
-            }
-
-        case SHOW_CONTENT:
-            return {
-                ...state, message: action.data
+                message: action.data
             }
         default:
             return state
