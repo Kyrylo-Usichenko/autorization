@@ -1,8 +1,19 @@
 import HttpClient from './HttpClient';
+import axios from "axios";
+import {refreshToken} from "../redux/actions";
 
 export interface SignUpLoginBody {
   email: string;
   password: string;
+}
+
+interface  LoginResponse {
+  body: {
+    access_token:string,
+    refresh_token:string,
+  }
+  statusCode: number,
+
 }
 
 class MainApi extends HttpClient {
@@ -21,7 +32,8 @@ class MainApi extends HttpClient {
   };
 
   public signUp = (body: SignUpLoginBody) => this.instance.post<{ message: string }>('/sign_up', body);
-  public login = (body: SignUpLoginBody) => this.instance.post<{ message: string }>(`login?email=${body.email}&password=${body.password}`);
+  public login = (body: SignUpLoginBody) => this.instance.post<LoginResponse>(`login?email=${body.email}&password=${body.password}`);
 }
+
 
 export default MainApi;

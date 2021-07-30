@@ -19,12 +19,15 @@ function reducer(state= initialState, action: ActionsType) {
     switch (action.type) {
         case ActionsTypeEnum.AUTH_SUCCESS:
             return {
-                ...state, data: action.data,
+                ...state,
+                data: action.statusCode,
+
             }
 
         case ActionsTypeEnum.SHOW_CONTENT:
             return {
-                ...state, message: action.data
+                ...state,
+                message: action.data
             }
         default:
             return state

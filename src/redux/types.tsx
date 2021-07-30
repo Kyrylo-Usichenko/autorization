@@ -13,7 +13,7 @@ export type ShowContentToPageType = {
 
 export type AuthSuccessType = {
     type: ActionsTypeEnum.AUTH_SUCCESS
-    data: string
+    statusCode: number
 }
 
 export type userInformationType = {

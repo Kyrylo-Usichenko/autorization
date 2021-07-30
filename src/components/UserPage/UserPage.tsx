@@ -4,9 +4,13 @@ import {useEffect} from "react";
 import {showContent} from "../../redux/actions";
 
 
-const UserPage = ({message}) => {
+type propsType = {
+    message: string | null
+}
 
+const UserPage = (props:propsType) => {
 
+    const {message} = props
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(showContent(window.sessionStorage.access_token))
@@ -14,9 +18,7 @@ const UserPage = ({message}) => {
 
     return (
         <div className='container'>
-
             <h1>{message}</h1>
-
         </div>
     );
 };

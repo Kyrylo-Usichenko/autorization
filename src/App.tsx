@@ -10,11 +10,10 @@ import { State } from './index';
 function App() {
     const history = useHistory();
 
-    const {message,data} = useSelector(({reducer}: State) => reducer)
-
-    if (data && data.statusCode === 200 ) {
+    const {message ,data} = useSelector(({reducer}: State) => reducer)
+    if (data  === 200 ) {
         history.push("/me");
-    } else if (data && data.status_code === 401){
+    } else if (data === 401){
         history.push("/")
     }
 
@@ -26,7 +25,7 @@ function App() {
             </Route>
 
             <Route exact path="/me">
-                <UserPage  message={message}/>
+                <UserPage  message={message} />
             </Route>
         </div>
     );
