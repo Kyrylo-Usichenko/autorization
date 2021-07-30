@@ -3,9 +3,14 @@ import * as ReactDOM from 'react-dom'
 import {BrowserRouter} from 'react-router-dom'
 import App from './App'
 import {Provider} from "react-redux";
-import {applyMiddleware, compose, createStore} from "redux";
+import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import {rootReducer} from "./redux/rootReducer";
-import thunk from "redux-thunk";
+import thunk, { ThunkAction } from "redux-thunk";
+import MainApi from './api/mainApi';
+
+export const api = {
+  mainApi: MainApi.getInstance(),
+};
 
 const composeEnhancers =
     typeof window === 'object' &&
@@ -14,12 +19,19 @@ const composeEnhancers =
         // @ts-ignore
         window.REDUX_DEVTOOLS_EXTENSION_COMPOSE({}) : compose;
 
+export const generalReducer = combineReducers({
+  rootReducer,
+});
+
 const store = createStore(
-    rootReducer,
-    composeEnhancers(
-        applyMiddleware(thunk)
-    )
+  rootReducer,
+  composeEnhancers(
+    applyMiddleware(thunk.withExtraArgument(api))
+  )
 )
+
+
+export type AsyncAction<R = void> = ThunkAction<R, State, typeof api, any | any>;
 
 ReactDOM.render(
     <Provider store={store}>
@@ -29,3 +41,5 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root')
 );
+
+export type State = ReturnType<typeof rootReducer>;

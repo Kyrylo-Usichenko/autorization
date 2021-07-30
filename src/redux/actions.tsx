@@ -1,26 +1,23 @@
 import axios from "axios";
+import { AsyncAction } from '../index';
+
 import {
-    AUTH_SUCCESS,
+    ActionsTypeEnum,
     loginInformationType,
-    SHOW_CONTENT,
-    UPDATE_NEW_EMAIL,
-    UPDATE_NEW_PASSWORD,
     userInformationDispatchType,
     userInformationType
 } from "./types";
 
-export const updateEmailActionCreator = (value: string) => ({type: UPDATE_NEW_EMAIL, value})
-export const updatePasswordActionCreator = (value: string) => ({type: UPDATE_NEW_PASSWORD, value})
 
 export function showContentToPage(data: string) {
     return {
-        type: SHOW_CONTENT,
+        type: ActionsTypeEnum.SHOW_CONTENT,
         data
     }
 }
 export function authSuccess(data: string) {
     return {
-        type: AUTH_SUCCESS,
+        type: ActionsTypeEnum.AUTH_SUCCESS,
         data
     }
 }
@@ -46,7 +43,7 @@ export function login(email: string, password: string) {
 
         let logUrl = `http://142.93.134.108:1111/login?email=${email}&password=${password}`
 
-        await axios.post(logUrl, authData).then((res) => {
+        await axios.post(logUrl).then((res) => {
 
             if (res.data.statusCode === 200) {
                 saveToken(JSON.stringify(res.data.body.access_token), JSON.stringify(res.data.body.refresh_token))
@@ -105,17 +102,16 @@ axios.interceptors.request.use(
 
 
 
-export function registration(email: string, password: string) {
-    return async () => {
-        const authData = {
-            email, password
-        }
-        let regUrl = 'http://142.93.134.108:1111/sign_up'
-
-        const response = await axios.post(regUrl, authData)
-        const data = response.data
-        alert(data.message)
-
+export const registration = (email: string, password: string): AsyncAction => async (
+  dispatch,
+  getState,
+  {mainApi}
+  ) => {
+    try {
+        const { message } = await mainApi.signUp({email, password});
+        alert(message);
+    } catch (e) {
+        console.log(e)
     }
-}
+};
 

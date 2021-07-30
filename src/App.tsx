@@ -4,11 +4,13 @@ import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage";
 import UserPage from "./components/UserPage/UserPage";
+import { State } from './index';
 
 
 function App() {
     const history = useHistory();
-    const {email,password,message,data} = useSelector(({reducer}:any) => reducer)
+
+    const {message,data} = useSelector(({reducer}: State) => reducer)
 
     if (data && data.statusCode === 200 ) {
         history.push("/me");
@@ -20,7 +22,7 @@ function App() {
     return (
         <div className="App">
             <Route exact path="/">
-                <HomePage email={email} password={password}/>
+                <HomePage />
             </Route>
 
             <Route exact path="/me">
